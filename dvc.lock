@@ -1,0 +1,45 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+    - path: data/mushrooms.csv
+      hash: md5
+      md5: 20e36f0bcc0fec359eb394ee947237dd
+      size: 374003
+    outs:
+    - path: test.csv
+      hash: md5
+      md5: 6ce5301e8ba6ebf38ac44a86985826e5
+      size: 76917
+    - path: train.csv
+      hash: md5
+      md5: 120a8c891cacb5e9e5e1ffee996fb81c
+      size: 306801
+  train:
+    cmd: python train.py
+    deps:
+    - path: test.csv
+      hash: md5
+      md5: 6ce5301e8ba6ebf38ac44a86985826e5
+      size: 76917
+    - path: train.csv
+      hash: md5
+      md5: 120a8c891cacb5e9e5e1ffee996fb81c
+      size: 306801
+    outs:
+    - path: model.pkl
+      hash: md5
+      md5: 1d64ef56416404a2d533750fb90047d8
+      size: 418953
+  tune:
+    cmd: python tune.py
+    deps:
+    - path: test.csv
+      hash: md5
+      md5: 6ce5301e8ba6ebf38ac44a86985826e5
+      size: 76917
+    - path: train.csv
+      hash: md5
+      md5: 120a8c891cacb5e9e5e1ffee996fb81c
+      size: 306801

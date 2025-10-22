@@ -1,0 +1,22 @@
+stages:
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+      - data/mushrooms.csv
+    outs:
+      - train.csv
+      - test.csv
+
+  train:
+    cmd: python train.py
+    deps:
+      - train.csv
+      - test.csv
+    outs:
+      - model.pkl
+
+  tune:
+    cmd: python tune.py
+    deps:
+      - train.csv
+      - test.csv
